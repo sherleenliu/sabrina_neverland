@@ -273,3 +273,142 @@ input {
     font-size: clamp(14px, 4vw, 20px) !important;
   }
 }
+
+
+/* MOBILE FINAL PATCH */
+@media (max-width: 768px) {
+  #viewport {
+    width: 100vw !important;
+    height: 100dvh !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+  }
+
+  .scene {
+    width: 100vw !important;
+    height: 100dvh !important;
+  }
+
+  /* 首頁：讓人物與主標完整進畫面，不被裁切 */
+  .intro-bg {
+    background-size: auto 100% !important;
+    background-position: 47% center !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .intro-stars {
+    opacity: .32 !important;
+  }
+
+  .enter-btn {
+    left: 50% !important;
+    right: auto !important;
+    bottom: calc(8.5% + env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%) !important;
+    width: min(84vw, 360px) !important;
+    padding: 13px 18px !important;
+    font-size: 13px !important;
+    letter-spacing: .12em !important;
+  }
+
+  /* 互動頁：手機版主標不斷行，整組縮小 */
+  .game-title {
+    top: 2.2% !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+  }
+
+  .game-title h1 {
+    white-space: nowrap !important;
+    font-size: clamp(24px, 7.1vw, 34px) !important;
+    letter-spacing: .025em !important;
+    line-height: 1 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* 副標從 comma 後 JS 會插入換行 */
+  .game-title p {
+    font-size: clamp(17px, 4.8vw, 24px) !important;
+    line-height: 1.18 !important;
+    max-width: 92vw !important;
+    margin: 0 auto !important;
+  }
+
+  .counter {
+    top: 8px !important;
+    right: 8px !important;
+    font-size: 12px !important;
+    padding: 4px 7px !important;
+    background: rgba(2,8,23,.55) !important;
+    border-radius: 8px !important;
+  }
+
+  .bg {
+    background-size: auto 100% !important;
+    background-position: center center !important;
+  }
+
+  .quest-form {
+    width: 92vw !important;
+    bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .form-title {
+    font-size: 13px !important;
+    letter-spacing: .07em !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .quest-form input,
+  .quest-form button {
+    height: 46px !important;
+    font-size: 15px !important;
+  }
+
+  .quest-form p {
+    font-size: 12px !important;
+  }
+
+  /* Finale 時文字稍微下移，避免和上方標題擠在一起 */
+  .game.finale-mode .game-title {
+    top: 1.5% !important;
+  }
+
+  .game.finale-mode .game-title h1 {
+    font-size: clamp(22px, 6.2vw, 30px) !important;
+    white-space: nowrap !important;
+    margin-bottom: 9px !important;
+  }
+
+  .game.finale-mode .game-title p {
+    font-size: clamp(15px, 4.2vw, 20px) !important;
+    line-height: 1.18 !important;
+  }
+}
+
+
+/* MOBILE COUNTER FIX: avoid conflict with the title */
+@media (max-width: 768px) {
+  .counter {
+    top: auto !important;
+    right: 10px !important;
+    bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    border-radius: 999px !important;
+    background: rgba(2, 8, 23, .72) !important;
+    color: rgba(255, 231, 160, .82) !important;
+    z-index: 88 !important;
+    pointer-events: none !important;
+  }
+
+  .game.finale-mode .counter {
+    display: none !important;
+  }
+}

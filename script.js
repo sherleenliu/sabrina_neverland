@@ -175,7 +175,9 @@ function startFinale() {
   finaleStarted = true;
   questLayer.innerHTML = '';
   game.classList.add('finale-mode');
-  tagline.textContent = 'Never Land will always be here, built by you, with all of us.';
+  tagline.innerHTML = isMobile
+    ? 'Never Land will always be here,<br>built by you, with all of us.'
+    : 'Never Land will always be here, built by you, with all of us.';
   brightLayer.style.opacity = '.88';
   finale.classList.remove('hidden');
 
@@ -230,30 +232,40 @@ function getTextPoints() {
   const o = off.getContext('2d');
   o.clearRect(0, 0, 1920, 1080);
 
-  // 在島前面的上空，避開最上面的主標與副標
   o.fillStyle = '#fff';
   o.textAlign = 'center';
   o.textBaseline = 'middle';
-  o.font = '700 104px Georgia, "Times New Roman", serif';
-  o.fillText('HAPPY BIRTHDAY', 960, 295);
-  o.font = '700 118px Georgia, "Times New Roman", serif';
-  o.fillText('SABRINA', 960, 415);
+
+  if (isMobile) {
+    o.font = '700 126px Georgia, "Times New Roman", serif';
+    o.fillText('HAPPY BIRTHDAY', 960, 365);
+    o.font = '700 138px Georgia, "Times New Roman", serif';
+    o.fillText('SABRINA', 960, 505);
+  } else {
+    o.font = '700 104px Georgia, "Times New Roman", serif';
+    o.fillText('HAPPY BIRTHDAY', 960, 295);
+    o.font = '700 118px Georgia, "Times New Roman", serif';
+    o.fillText('SABRINA', 960, 415);
+  }
 
   const data = o.getImageData(0, 0, 1920, 1080).data;
   const pts = [];
-  const step = isMobile ? 8 : 7;
+  const step = isMobile ? 6 : 7;
 
-  for (let y = 170; y < 500; y += step) {
-    for (let x = 260; x < 1660; x += step) {
+  const yStart = isMobile ? 260 : 170;
+  const yEnd = isMobile ? 585 : 500;
+
+  for (let y = yStart; y < yEnd; y += step) {
+    for (let x = 210; x < 1710; x += step) {
       const a = data[(y * 1920 + x) * 4 + 3];
-      if (a > 38 && Math.random() > .18) {
-        pts.push({ x, y, boost: 1 });
+      if (a > 34 && Math.random() > (isMobile ? .08 : .18)) {
+        pts.push({ x, y });
       }
     }
   }
 
   shuffle(pts);
-  return pts.slice(0, TEXT_PARTICLE_LIMIT);
+  return pts.slice(0, isMobile ? 780 : TEXT_PARTICLE_LIMIT);
 }
 
 function flyFinalSpark(x1, y1, x2, y2) {
@@ -377,10 +389,10 @@ function drawTextParticles() {
     const alpha = Math.min(1, t * 2.25) * Math.min(1, pulse + .08);
 
     ctx.globalAlpha = alpha;
-    ctx.shadowBlur = TEXT_SHADOW_BLUR;
+    ctx.shadowBlur = isMobile ? 2 : TEXT_SHADOW_BLUR;
     ctx.shadowColor = 'rgba(255, 231, 160, .95)';
     ctx.fillStyle = '#ffe7a0';
-    drawTinyStar(ctx, p.x, p.y, p.size * 0.95 * (1 + .08 * Math.sin(elapsed * 4 + p.twinkle)));
+    drawTinyStar(ctx, p.x, p.y, p.size * (isMobile ? 1.02 : .95) * (1 + .05 * Math.sin(elapsed * 4 + p.twinkle)));
   }
 
   ctx.restore();
@@ -391,19 +403,19 @@ function drawTinyStar(context, x, y, r) {
   context.arc(x, y, r, 0, Math.PI * 2);
   context.fill();
 
-  context.strokeStyle = 'rgba(255, 245, 200, .62)';
-  context.lineWidth = .8;
+  context.strokeStyle = isMobile ? 'rgba(255, 245, 200, .82)' : 'rgba(255, 245, 200, .62)';
+  context.lineWidth = isMobile ? 1.05 : .8;
   context.beginPath();
-  context.moveTo(x - r * 2.1, y);
-  context.lineTo(x + r * 2.1, y);
-  context.moveTo(x, y - r * 2.1);
-  context.lineTo(x, y + r * 2.1);
+  context.moveTo(x - r * 2.15, y);
+  context.lineTo(x + r * 2.15, y);
+  context.moveTo(x, y - r * 2.15);
+  context.lineTo(x, y + r * 2.15);
   context.stroke();
 
   context.shadowBlur = 0;
-  context.fillStyle = 'rgba(255,255,255,.88)';
+  context.fillStyle = isMobile ? 'rgba(255,255,255,.96)' : 'rgba(255,255,255,.88)';
   context.beginPath();
-  context.arc(x, y, Math.max(.7, r * .34), 0, Math.PI * 2);
+  context.arc(x, y, Math.max(isMobile ? 1.05 : .7, r * (isMobile ? .42 : .34)), 0, Math.PI * 2);
   context.fill();
 }
 
