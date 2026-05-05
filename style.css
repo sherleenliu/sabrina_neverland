@@ -137,3 +137,139 @@ input {
   background: none !important;
   box-shadow: none !important;
 }
+
+
+/* Performance + responsive final patch */
+#fxCanvas {
+  contain: strict;
+}
+
+.bg,
+.intro-bg {
+  will-change: opacity, transform;
+}
+
+.quest-bubble,
+.star-fly,
+.pulse,
+.island-glow {
+  will-change: transform, opacity;
+}
+
+/* Desktop: keep existing cinematic 16:9 stage */
+@media (max-width: 768px) {
+  html, body {
+    overflow: hidden;
+  }
+
+  #viewport {
+    position: relative !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+  }
+
+  .scene {
+    height: 100dvh !important;
+  }
+
+  .intro-bg {
+    background-position: 58% center !important;
+    transform: scale(1.02) !important;
+  }
+
+  .enter-btn {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 7.5% !important;
+    transform: translateX(-50%) !important;
+    width: min(82vw, 360px) !important;
+    padding: 14px 22px !important;
+    font-size: 13px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .bg {
+    background-size: auto 100% !important;
+    background-position: center center !important;
+  }
+
+  .game-title {
+    top: 2.5% !important;
+    width: 96% !important;
+  }
+
+  .game-title h1 {
+    font-size: clamp(26px, 8vw, 40px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: .04em !important;
+    margin-bottom: 8px !important;
+  }
+
+  .game-title p {
+    font-size: clamp(18px, 5vw, 26px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .counter {
+    top: 12px !important;
+    right: 12px !important;
+    font-size: 14px !important;
+    z-index: 80 !important;
+  }
+
+  .quest-form {
+    width: 92vw !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .form-title {
+    font-size: 14px !important;
+    letter-spacing: .08em !important;
+    margin-bottom: 9px !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .quest-form input,
+  .quest-form button {
+    height: 44px !important;
+    font-size: 15px !important;
+  }
+
+  .quest-form p {
+    margin-top: 8px !important;
+    font-size: 13px !important;
+  }
+
+  .quest-bubble {
+    width: 150px !important;
+    min-height: 88px !important;
+    padding: 15px 12px !important;
+  }
+
+  .quest-bubble .name {
+    font-size: 12px !important;
+  }
+
+  .quest-bubble .quest {
+    font-size: 12px !important;
+  }
+
+  .dev-hints {
+    display: none !important;
+  }
+
+  .game.finale-mode .game-title h1 {
+    font-size: clamp(24px, 7vw, 34px) !important;
+  }
+
+  .game.finale-mode .game-title p {
+    font-size: clamp(14px, 4vw, 20px) !important;
+  }
+}

@@ -9,6 +9,12 @@ const finale = document.getElementById('finale');
 const tagline = document.getElementById('tagline');
 const fxCanvas = document.getElementById('fxCanvas');
 const ctx = fxCanvas.getContext('2d');
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const TEXT_PARTICLE_LIMIT = isMobile ? 520 : 900;
+const FINAL_SPARK_COUNT = isMobile ? 38 : 75;
+const FIREWORK_PARTICLE_COUNT = isMobile ? 36 : 58;
+const PARTICLE_SHADOW_BLUR = isMobile ? 2 : 5;
+const TEXT_SHADOW_BLUR = isMobile ? 3 : 6;
 
 let quests = [];
 let particles = [];
@@ -54,7 +60,10 @@ questForm.addEventListener('submit', (e) => {
 function addQuest(name, text) {
   const id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
   const visible = quests.filter(q => !q.done).length;
-  const slot = bubbleSlots[visible % bubbleSlots.length];
+  const mobileSlots = [
+    {x: 960, y: 260}, {x: 960, y: 390}, {x: 960, y: 520}, {x: 960, y: 650}
+  ];
+  const slot = (isMobile ? mobileSlots : bubbleSlots)[visible % (isMobile ? mobileSlots.length : bubbleSlots.length)];
   const q = { id, name, text, x: slot.x, y: slot.y, done: false };
   quests.push(q);
   renderQuest(q);
@@ -205,7 +214,7 @@ function launchFinaleStarsToText() {
   });
 
   // Extra shooting stars from island to text
-  for (let i = 0; i < 130; i++) {
+  for (let i = 0; i < FINAL_SPARK_COUNT; i++) {
     const p = sourcePoints[i % sourcePoints.length];
     const target = points[Math.floor(Math.random() * points.length)];
     setTimeout(() => flyFinalSpark(p.x, p.y, target.x, target.y), i * 10);
@@ -232,7 +241,7 @@ function getTextPoints() {
 
   const data = o.getImageData(0, 0, 1920, 1080).data;
   const pts = [];
-  const step = 6;
+  const step = isMobile ? 8 : 7;
 
   for (let y = 170; y < 500; y += step) {
     for (let x = 260; x < 1660; x += step) {
@@ -244,7 +253,7 @@ function getTextPoints() {
   }
 
   shuffle(pts);
-  return pts.slice(0, 1600);
+  return pts.slice(0, TEXT_PARTICLE_LIMIT);
 }
 
 function flyFinalSpark(x1, y1, x2, y2) {
@@ -277,8 +286,8 @@ function burstFinalFireworks() {
 
   centers.forEach((c, idx) => {
     setTimeout(() => {
-      for (let i = 0; i < 95; i++) {
-        const angle = (i / 95) * Math.PI * 2 + Math.random() * .12;
+      for (let i = 0; i < FIREWORK_PARTICLE_COUNT; i++) {
+        const angle = (i / FIREWORK_PARTICLE_COUNT) * Math.PI * 2 + Math.random() * .12;
         const speed = 1.4 + Math.random() * 5.4;
         particles.push({
           x: c.x,
@@ -300,14 +309,20 @@ function addParticle(x, y, color = '#fff', size = 1) {
     x, y,
     vx: (Math.random() - .5) * 1.2,
     vy: (Math.random() - .5) * 1.2 - .15,
-    life: 42,
-    max: 42,
+    life: isMobile ? 26 : 34,
+    max: isMobile ? 26 : 34,
     size: size + Math.random() * 1.8,
     color
   });
 }
 
+let rafFrame = 0;
 function animateParticles() {
+  rafFrame++;
+  if (isMobile && !finaleStarted && particles.length === 0 && rafFrame % 2 === 0) {
+    requestAnimationFrame(animateParticles);
+    return;
+  }
   ctx.clearRect(0, 0, 1920, 1080);
 
   drawTextParticles();
@@ -322,7 +337,7 @@ function animateParticles() {
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
     ctx.globalAlpha = alpha;
-    ctx.shadowBlur = 11;
+    ctx.shadowBlur = PARTICLE_SHADOW_BLUR;
     ctx.shadowColor = p.color;
     ctx.fillStyle = p.color;
     ctx.beginPath();
@@ -349,7 +364,7 @@ function drawTextParticles() {
     p.x = quad(p.sx, p.cx, p.tx, e);
     p.y = quad(p.sy, p.cy, p.ty, e);
 
-    if (t > 0 && t < 1) {
+    if (!isMobile && t > 0 && t < 1 && p.twinkle > 3) {
       ctx.strokeStyle = `rgba(255, 221, 128, ${0.045 * t})`;
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -362,7 +377,7 @@ function drawTextParticles() {
     const alpha = Math.min(1, t * 2.25) * Math.min(1, pulse + .08);
 
     ctx.globalAlpha = alpha;
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = TEXT_SHADOW_BLUR;
     ctx.shadowColor = 'rgba(255, 231, 160, .95)';
     ctx.fillStyle = '#ffe7a0';
     drawTinyStar(ctx, p.x, p.y, p.size * 0.95 * (1 + .08 * Math.sin(elapsed * 4 + p.twinkle)));
