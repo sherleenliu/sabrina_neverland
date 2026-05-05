@@ -1,0 +1,139 @@
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020817;color:#ffe7a0;font-family:Georgia,'Times New Roman',serif}#viewport{position:relative;width:100vw;height:100vh;overflow:hidden}.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.2s ease}.scene.active{opacity:1;pointer-events:auto}.intro-bg{position:absolute;inset:0;background:url('assets/intro.png') center/cover no-repeat;transform:scale(1.02);animation:introDrift 12s ease-in-out infinite alternate}.intro-stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 2px),radial-gradient(circle,rgba(255,231,160,.75) 0 1px,transparent 2px);background-size:130px 130px,220px 220px;opacity:.45;mix-blend-mode:screen;animation:starsTwinkle 3.5s ease-in-out infinite alternate}.enter-btn{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);padding:18px 42px;border:1px solid rgba(255,231,160,.55);border-radius:999px;background:rgba(8,18,40,.45);color:#ffe7a0;letter-spacing:.16em;font-weight:700;font-size:16px;box-shadow:0 0 34px rgba(255,231,160,.22),inset 0 0 18px rgba(255,255,255,.05);backdrop-filter:blur(12px);cursor:pointer}.enter-btn:hover{box-shadow:0 0 54px rgba(255,231,160,.38),inset 0 0 18px rgba(255,255,255,.08)}@keyframes introDrift{to{transform:scale(1.055) translate3d(-10px,-6px,0)}}@keyframes starsTwinkle{from{opacity:.25}to{opacity:.62}}
+#game{background:#030816}.bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat}.bg-dark{background-image:url('assets/island_dark_clean.png')}.bg-bright{background-image:url('assets/island_bright_clean.png');opacity:0;transition:opacity 1.4s ease;mix-blend-mode:normal}.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 48%,transparent 0 46%,rgba(2,5,18,.18) 68%,rgba(0,0,0,.5) 100%);pointer-events:none}#fxCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}.game-title{position:absolute;left:50%;top:4.5%;transform:translateX(-50%);width:100%;text-align:center;text-shadow:0 0 22px rgba(255,231,160,.5),0 0 44px rgba(255,231,160,.18);z-index:20}.game-title h1{font-size:58px;letter-spacing:.08em;line-height:1;margin:0 0 12px;font-weight:500}.game-title p{font-size:36px;line-height:1.1;margin:0;color:#ffe7a0;text-transform:none}.counter{position:absolute;right:74px;top:35px;font-size:20px;font-weight:700;letter-spacing:.04em;text-shadow:0 0 14px rgba(255,231,160,.4);z-index:25}.quest-layer{position:absolute;inset:0;z-index:15;pointer-events:none}.quest-bubble{position:absolute;transform:translate(-50%,-50%) scale(.72);width:210px;min-height:118px;padding:22px 20px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff7d8;background:radial-gradient(circle at 50% 50%,rgba(12,20,42,.7),rgba(3,8,24,.52));border:1px solid rgba(255,231,160,.42);border-radius:42% 50% 46% 54%;box-shadow:0 0 30px rgba(255,231,160,.28),inset 0 0 22px rgba(255,255,255,.04);opacity:0;pointer-events:auto;cursor:pointer;animation:bubbleIn .85s cubic-bezier(.2,.9,.2,1) forwards, bubbleFloat 4.8s ease-in-out infinite}.quest-bubble::before{content:"";position:absolute;inset:-9px;border-radius:inherit;border:2px dotted rgba(255,231,160,.6);filter:drop-shadow(0 0 8px rgba(255,231,160,.7));opacity:.82}.quest-bubble .star{font-size:20px;margin-bottom:5px;color:#ffd978;text-shadow:0 0 10px rgba(255,231,160,.8)}.quest-bubble .name{font-size:15px;letter-spacing:.08em;font-weight:bold;color:#ffe097;text-transform:uppercase;margin-bottom:7px}.quest-bubble .quest{font-size:17px;line-height:1.25;color:#fff4dc;text-shadow:0 0 10px rgba(255,255,255,.25)}.quest-bubble.completing{animation:none;transition:transform .35s ease,opacity .35s ease;transform:translate(-50%,-50%) scale(.15);opacity:0;pointer-events:none}@keyframes bubbleIn{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}@keyframes bubbleFloat{0%,100%{margin-top:0}50%{margin-top:-14px}}
+.quest-form{position:absolute;left:50%;bottom:4.5%;transform:translateX(-50%);width:820px;text-align:center;z-index:30;color:#ffe7a0;text-shadow:0 0 10px rgba(255,231,160,.25)}.form-title{font-size:21px;font-weight:700;letter-spacing:.12em;margin-bottom:14px}.form-row{display:grid;grid-template-columns:240px 1fr 150px;gap:14px}.quest-form input,.quest-form button{height:54px;border-radius:8px;border:1px solid rgba(255,231,160,.48);background:rgba(3,8,24,.74);color:#fff4dc;font-family:Georgia,'Times New Roman',serif;font-size:18px;outline:none;box-shadow:0 0 18px rgba(255,231,160,.08);backdrop-filter:blur(8px)}.quest-form input{padding:0 20px}.quest-form input::placeholder{color:rgba(255,255,255,.62);font-style:italic}.quest-form button{background:linear-gradient(180deg,rgba(87,37,124,.84),rgba(43,21,78,.88));color:#ffe7a0;font-weight:bold;letter-spacing:.07em;cursor:pointer}.quest-form button:hover{box-shadow:0 0 28px rgba(255,231,160,.32)}.quest-form p{margin:12px 0 0;font-size:18px;color:rgba(255,255,255,.72)}.finale{position:absolute;inset:0;z-index:50;display:flex;align-items:flex-start;justify-content:center;padding-top:55px;pointer-events:none;background:radial-gradient(circle at 50% 23%,rgba(255,231,160,.13),transparent 30%);opacity:1;transition:opacity .6s ease}.finale.hidden{opacity:0}.finale-text{font-size:96px;line-height:.98;text-align:center;color:#ffe39a;letter-spacing:.06em;text-shadow:0 0 12px rgba(255,231,160,.9),0 0 32px rgba(255,196,80,.65),0 0 70px rgba(255,196,80,.32);font-weight:500}.finale-text span{font-size:92px}.dev-hints{position:absolute;left:8px;bottom:8px;color:rgba(255,255,255,.45);font:14px system-ui;z-index:60}.star-fly{position:absolute;left:0;top:0;width:28px;height:28px;z-index:40;pointer-events:none;filter:drop-shadow(0 0 8px rgba(255,231,160,.95));transform:translate(-50%,-50%)}.star-fly::before{content:"✦";position:absolute;inset:0;font-size:32px;line-height:28px;color:#ffe37d;text-shadow:0 0 12px #fff,0 0 28px #ffd45c}.star-trail{position:absolute;width:110px;height:3px;background:linear-gradient(90deg,transparent,rgba(255,231,160,.95));filter:blur(1px);transform-origin:right center;opacity:.9}.pulse{position:absolute;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,231,160,.75);box-shadow:0 0 28px rgba(255,231,160,.55);transform:translate(-50%,-50%) scale(.2);animation:pulseOut .9s ease-out forwards;z-index:35;pointer-events:none}.island-glow{position:absolute;width:120px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,231,160,.55),rgba(255,231,160,.07) 58%,transparent 70%);filter:blur(8px);transform:translate(-50%,-50%);z-index:10;pointer-events:none;mix-blend-mode:screen}@keyframes pulseOut{to{opacity:0;transform:translate(-50%,-50%) scale(2.8)}}@media(max-aspect-ratio:16/9){#viewport{width:100vw;height:56.25vw;top:50%;transform:translateY(-50%);position:absolute}.scene{height:100%}}@media(min-aspect-ratio:16/9){#viewport{height:100vh;width:177.777vh;left:50%;transform:translateX(-50%);position:absolute}.scene{height:100%}}
+
+
+/* Final production tweaks */
+.enter-btn{
+  left:auto !important;
+  right:6% !important;
+  bottom:6% !important;
+  transform:none !important;
+  padding:14px 32px !important;
+  font-size:15px !important;
+}
+
+.game.finale-mode .quest-form,
+.game.finale-mode .counter,
+.game.finale-mode .quest-layer{
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .45s ease;
+}
+
+.game.finale-mode .game-title p{
+  font-size:30px;
+}
+
+.finale{
+  background:radial-gradient(circle at 50% 43%, rgba(255,231,160,.10), transparent 34%);
+}
+
+.finale-text{
+  display:none !important;
+}
+
+#fxCanvas{
+  z-index:55;
+}
+
+
+/* DEBUG FIX: remove DOM trail fan artifact */
+.star-trail {
+  display: none !important;
+}
+
+.star-fly {
+  filter: drop-shadow(0 0 10px rgba(255,231,160,.95)) !important;
+}
+
+/* Prevent accidental blue text selection on projection */
+* {
+  user-select: none;
+}
+
+input {
+  user-select: text;
+}
+
+/* Make finale cleaner and keep background visible */
+.game.finale-mode .quest-form {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+/* FINAL CLEAN FIX: remove radial fan / blur artifacts completely */
+.star-trail,
+.star-fly::after,
+.star-fly .star-trail,
+.trail,
+.light-trail,
+.orb,
+.glow,
+.particle-glow {
+  display: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep flying star as a clean point only */
+.star-fly {
+  width: 18px !important;
+  height: 18px !important;
+  filter: drop-shadow(0 0 6px rgba(255,231,160,.9)) !important;
+}
+.star-fly::before {
+  font-size: 22px !important;
+  line-height: 18px !important;
+  text-shadow: 0 0 8px #fff3bd, 0 0 15px rgba(255,231,160,.55) !important;
+}
+
+/* Make the finale particle text slightly sharper */
+#fxCanvas {
+  image-rendering: auto;
+}
+
+
+/* Final minimal fix: remove fan/radial artifact classes */
+.star-trail,
+.trail,
+.light-trail,
+.orb,
+.glow,
+.particle-glow,
+.radial-blur,
+.fan,
+.fan-blur,
+[class*="trail"],
+[class*="blur"],
+[class*="fan"] {
+  display: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+
+/* Fix2: keep initial island dark / uncompleted, no extra artifacts */
+.star-trail,
+.trail,
+.light-trail,
+.orb,
+.glow,
+.particle-glow,
+.radial-blur,
+.fan,
+.fan-blur {
+  display: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}

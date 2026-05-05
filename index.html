@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sabrina's Never Land</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="viewport">
+    <section id="intro" class="scene active">
+      <div class="intro-bg"></div>
+      <div class="intro-stars"></div>
+      <button id="enterBtn" class="enter-btn">ENTER NEVER LAND ✦</button>
+    </section>
+
+    <section id="game" class="scene">
+      <div class="bg bg-dark"></div>
+      <div class="bg bg-bright" id="brightLayer"></div>
+      <canvas id="fxCanvas" width="1920" height="1080"></canvas>
+
+      <header class="game-title">
+        <h1>✦ SABRINA’S NEVER LAND ✦</h1>
+        <p id="tagline">Let’s Ignite Never Land.</p>
+      </header>
+
+      <div id="questLayer" class="quest-layer"></div>
+
+      <div class="counter" id="counter">Quests 0 / 0</div>
+
+      <form id="questForm" class="quest-form" autocomplete="off">
+        <div class="form-title">✦ LEAVE A QUEST FOR SABRINA ✦</div>
+        <div class="form-row">
+          <input id="nameInput" type="text" placeholder="Your name..." maxlength="18" />
+          <input id="questInput" type="text" placeholder="A quest for Sabrina to complete..." maxlength="70" />
+          <button type="submit">SEND ✦</button>
+        </div>
+        <p>Every quest lights up Never Land a little more ✦</p>
+      </form>
+
+      <div id="finale" class="finale hidden">
+        <div class="finale-text">HAPPY BIRTHDAY<br><span>SABRINA</span></div>
+      </div>
+
+      <div class="dev-hints">D demo｜R reset｜F finale</div>
+    </section>
+  </main>
+<script src="script.js"></script>
+</body>
+</html>
